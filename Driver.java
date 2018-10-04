@@ -293,6 +293,7 @@ public class Driver {
                     return num;
                 } else {
                     System.out.println ( "Please enter positive number" );
+                    System.out.println ();
                     menu_list ();
                     return 0;
                 }

@@ -9,6 +9,7 @@ public class CourseManagement {
         Driver dr = new Driver();
         try {
             System.out.println ("Welcome to Course Management System......");
+            System.out.println ();
             dr.login ();
         } catch (SQLException e) {
             e.printStackTrace();

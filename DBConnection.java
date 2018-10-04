@@ -27,14 +27,12 @@ public class DBConnection {
         Class.forName("oracle.jdbc.driver.OracleDriver");               //Driver Class
         //Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:9922/CSAMPR1.ITS.RMIT.EDU.AU", "s3690683", "WI5T5bpR");         //Established the database connection.
         Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//emu.cs.rmit.edu.au:1521/CSAMPR1.ITS.RMIT.EDU.AU", "s3690683", "WI5T5bpR");         //Established the database connection.
-
         Statement st = conn.createStatement();
         return st;
     }
 
     public Connection DBConnect() throws ClassNotFoundException, SQLException {
         Class.forName("oracle.jdbc.driver.OracleDriver");               //Driver Class
-
         //Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:9922/CSAMPR1.ITS.RMIT.EDU.AU", "s3690683", "WI5T5bpR");         //Established the DB connection.
         Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//emu.cs.rmit.edu.au:1521/CSAMPR1.ITS.RMIT.EDU.AU", "s3690683", "WI5T5bpR");
         //Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:9922:CSAMPR1.ITS.RMIT.EDU.AU", "s3690683", "WI5T5bpR");         //Established the DB connection.
