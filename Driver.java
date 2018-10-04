@@ -114,12 +114,10 @@ public class Driver {
                     break;
                 }
                 case 6: {
-                    System.out.println ( "6" );
                     crse_dtls ();
                     break;
                 }
                 case 7: {
-                    System.out.println ( "7" );
                     stdt_dtls ();
                     break;
                 }
@@ -288,10 +286,8 @@ public class Driver {
             choice = scnr.nextLine ();
         }
 
-
         int input = Integer.parseInt ( choice );
 
-        System.out.println ( input );
         if (input <= 5 && input != 0) {
             return input;
         } else {
@@ -529,6 +525,10 @@ public class Driver {
             String address = rs.getString ( "ADDRESS" );
             int age = rs.getInt ( "AGE" );
 
+            if(address==null){
+                address="Unknown";
+            }
+
             String chk3[] = id.split ( "," );
             int chk4[] = Arrays.stream ( chk3 ).mapToInt ( Integer::parseInt ).toArray ();
 
@@ -537,6 +537,7 @@ public class Driver {
                 for (int i = 0; i < chk4.length; i++) {
                     if (chk4[i] == crse_no)                                        // Checking whether they are already friends or not.
                     {
+
                         System.out.println ( "" + name + ", " + address + ", " + age );
                     }
                 }
