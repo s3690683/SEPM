@@ -483,7 +483,59 @@ public class Driver {
         pr_st.executeUpdate ();
     }
 
-    public void display_stud_list() throws SQLException, IOException, InterruptedException {}
+    public void display_stud_list() throws SQLException, IOException, InterruptedException {
+        int crse_no = Course ();
+        String crse_name = "";
+        String sql1 = "select COURSE_NAME from COURSE WHERE ID='" + crse_no + "'";
+        rs = st.executeQuery ( sql1 );
+        while (rs.next ()) {
+            crse_name = rs.getString ( "COURSE_NAME" );
+        }
+
+        int stud_enrolled1 = 0;
+        String qry8 = "select NO_OF_STUDENTS_ENROLLED from COURSE WHERE ID='" + crse_no + "'";
+        rs = st.executeQuery ( qry8 );
+
+        while (rs.next ()) {
+            stud_enrolled1 = rs.getInt ( "NO_OF_STUDENTS_ENROLLED" );
+            if (stud_enrolled1 == 0) {
+                System.out.println ( "No student enrolled." );
+                menu_list ();
+            }
+        }
+
+        System.out.println ( "== Students in " + getMappedCrse_Name ( crse_no ) + " ==" );
+        String sql = "select * from student";
+        rs = st.executeQuery ( sql );
+        while (rs.next ()) {
+            String id = rs.getString ( "ID" );
+            String name = rs.getString ( "STUD_NAME" );
+            String address = rs.getString ( "ADDRESS" );
+            int age = rs.getInt ( "AGE" );
+
+            String chk3[] = id.split ( "," );
+            int chk4[] = Arrays.stream ( chk3 ).mapToInt ( Integer::parseInt ).toArray ();
+
+            if (id.contains ( "," )) {
+
+                for (int i = 0; i < chk4.length; i++) {
+                    if (chk4[i] == crse_no)                                        // Checking whether they are already friends or not.
+                    {
+                        System.out.println ( "" + name + ", " + address + ", " + age );
+                    }
+                }
+                //menu_list ();
+            } else {
+                for (int i = 0; i < chk4.length; i++) {
+                    if (chk4[i] == crse_no) {
+                        System.out.println ( "" + name + ", " + address + ", " + age );
+                    }
+                    //menu_list ();
+                }
+            }
+        }
+        menu_list ();
+    }
 
     public void display_crse_fig() throws SQLException, IOException, InterruptedException {}
 }
