@@ -77,7 +77,8 @@ public class Driver {
         System.out.println ( " 2 . Withdraw a student" );
         System.out.println ( " 3 . Display a student list for a course" );
         System.out.println ( " 4 . Display the course figures" );
-        System.out.println ( " 5 . Quit" );
+        System.out.println ( " 5 . Update course fees" );
+        System.out.println ( " 6 . Quit" );
         System.out.println ();
         System.out.println ( "Enter an option:" );
         String choice = scnr.nextLine ();
@@ -107,6 +108,10 @@ public class Driver {
                     break;
                 }
                 case 5: {
+                    update_crse_fees ();
+                    break;
+                }
+                case 6: {
                     System.out.println ( "Exiting Program..." );
                     System.exit ( 0 );
                     break;
@@ -550,6 +555,21 @@ public class Driver {
 
         }
         Thread.sleep ( 3000 );
+        menu_list ();
+    }
+
+    public void update_crse_fees() throws SQLException, IOException, InterruptedException {
+        int crse_no = Course ();
+
+        System.out.println ( "Enter new fees to be updated:" );
+        String new_fees = scnr.nextLine ();
+        int updt_fees = containsOnlyNumbers ( new_fees );
+
+        pr_st = conn.prepareStatement ( "update COURSE set FEES='" + updt_fees + "'WHERE ID='" + crse_no + "'" );
+        pr_st.executeUpdate ();
+
+        System.out.println ( getMappedCrse_Name ( crse_no ) + " course fees updated successfully." );
+        Thread.sleep ( 1000 );
         menu_list ();
     }
 }
