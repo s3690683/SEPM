@@ -88,7 +88,6 @@ public class Driver {
         }
 
         int input = Integer.parseInt ( choice );
-
         if (input <= 5 && input != 0) {
             switch (input) {
                 case 1: {
@@ -537,5 +536,20 @@ public class Driver {
         menu_list ();
     }
 
-    public void display_crse_fig() throws SQLException, IOException, InterruptedException {}
+    public void display_crse_fig() throws SQLException, IOException, InterruptedException {
+        String sql = "select * from COURSE";
+        rs = st.executeQuery ( sql );
+        while (rs.next ()) {
+            String crse_name = rs.getString ( "COURSE_NAME" );
+            int stud_enrolled = rs.getInt ( "NO_OF_STUDENTS_ENROLLED" );
+            int income = rs.getInt ( "INCOME" );
+            int cst_of_rng = rs.getInt ( "COST_OF_RUNNING" );
+            int profit = income - cst_of_rng;
+
+            System.out.println ( "" + crse_name + " : Students " + stud_enrolled + ", Income $" + income + ", Cost $" + cst_of_rng + ", Profit $" + profit );
+
+        }
+        Thread.sleep ( 3000 );
+        menu_list ();
+    }
 }
