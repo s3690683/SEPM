@@ -78,7 +78,9 @@ public class Driver {
         System.out.println ( " 3 . Display a student list for a course" );
         System.out.println ( " 4 . Display the course figures" );
         System.out.println ( " 5 . Update course fees" );
-        System.out.println ( " 6 . Quit" );
+        System.out.println ( " 6 . View course details" );
+        System.out.println ( " 7 . View student details" );
+        System.out.println ( " 8 . Quit" );
         System.out.println ();
         System.out.println ( "Enter an option:" );
         String choice = scnr.nextLine ();
@@ -112,6 +114,16 @@ public class Driver {
                     break;
                 }
                 case 6: {
+                    System.out.println ( "6" );
+                    crse_dtls ();
+                    break;
+                }
+                case 7: {
+                    System.out.println ( "7" );
+                    stdt_dtls ();
+                    break;
+                }
+                case 8: {
                     System.out.println ( "Exiting Program..." );
                     System.exit ( 0 );
                     break;
@@ -571,5 +583,78 @@ public class Driver {
         System.out.println ( getMappedCrse_Name ( crse_no ) + " course fees updated successfully." );
         Thread.sleep ( 1000 );
         menu_list ();
+    }
+
+    public void crse_dtls() throws SQLException, IOException, InterruptedException {
+        int crse_no = Course ();
+
+        String sql = "select * from COURSE where ID='" + crse_no + "'";
+        rs = st.executeQuery ( sql );
+        while (rs.next ()) {
+            String crse_name = rs.getString ( "COURSE_NAME" );
+            String tchr_name = rs.getString ( "TEACHER_NAME" );
+            int max_stud_enrld = rs.getInt ( "MAX_STUDENTS" );
+            int fees = rs.getInt ( "FEES" );
+            int stud_enrolled = rs.getInt ( "NO_OF_STUDENTS_ENROLLED" );
+            int income = rs.getInt ( "INCOME" );
+            int cst_of_rng = rs.getInt ( "COST_OF_RUNNING" );
+            int profit = income - cst_of_rng;
+            System.out.println ( "***** " + crse_name + " *****" );
+            System.out.println ( "Teacher name : " + tchr_name );
+            System.out.println ( "Fees : $" + fees );
+            System.out.println ( "Students enrolled : " + stud_enrolled );
+            System.out.println ( "Total class capacity : " + max_stud_enrld );
+            System.out.println ( "Income : $" + income );
+            System.out.println ( "Cost of running : $" + cst_of_rng );
+        }
+
+        Thread.sleep ( 3000 );
+        menu_list ();
+    }
+
+    public void stdt_dtls() throws SQLException, IOException, InterruptedException {
+        String name = ask_name ();
+        String crse = null;
+
+        String sql = "select * from STUDENT where STUD_NAME='" + name + "'";
+        rs = st.executeQuery ( sql );
+        while (rs.next ()) {
+            String crse_id = rs.getString ( "ID" );
+            String stud_name = rs.getString ( "STUD_NAME" );
+            String addr = rs.getString ( "ADDRESS" );
+            int age = rs.getInt ( "AGE" );
+            int frst_crse = rs.getInt ( "FIRST_COURSE" );
+
+            String chk3[] = crse_id.split ( "," );
+            int chk4[] = Arrays.stream ( chk3 ).mapToInt ( Integer::parseInt ).toArray ();
+            System.out.println ();
+            System.out.println ( "Name : " + name );
+            System.out.println ();
+            System.out.println ( "Course enrolled : " );
+            for (int i = 0; i < chk4.length; i++) {
+                System.out.println ( getMappedCrse_Name ( chk4[i] ) );
+            }
+            System.out.println ();
+            if (addr == null) {
+                System.out.println ( "Address : Unknown" );
+            } else {
+                System.out.println ( "Address : " + addr );
+            }
+
+            System.out.println ();
+            System.out.println ( "Age : " + age );
+            System.out.println ();
+            System.out.println ( "20% discount in following courses : " );
+            String chk2[] = crse_id.split ( "," );
+            int chk5[] = Arrays.stream ( chk3 ).mapToInt ( Integer::parseInt ).toArray ();
+            for (int i = 0; i < chk4.length; i++) {
+                if (chk5[i] != frst_crse) {
+                    System.out.println ( getMappedCrse_Name ( chk5[i] ) );
+                }
+            }
+
+            Thread.sleep ( 3000 );
+            menu_list ();
+        }
     }
 }
