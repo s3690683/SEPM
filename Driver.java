@@ -91,7 +91,7 @@ public class Driver {
         }
 
         int input = Integer.parseInt ( choice );
-        if (input <= 5 && input != 0) {
+        if (input <= 8 && input != 0) {
             switch (input) {
                 case 1: {
                     add_stud ();
